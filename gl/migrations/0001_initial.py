@@ -8,40 +8,83 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Account',
+            name="Account",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('no', models.CharField(max_length=20)),
-                ('name', models.CharField(max_length=100)),
-                ('active', models.BooleanField(choices=[(True, 'Yes'), (False, 'No')], default=False)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("no", models.CharField(max_length=20)),
+                ("name", models.CharField(max_length=100)),
+                (
+                    "active",
+                    models.BooleanField(
+                        choices=[(True, "Yes"), (False, "No")], default=False
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='ProrationType',
+            name="ProrationType",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=50)),
-                ('active', models.BooleanField(choices=[(True, 'Yes'), (False, 'No')], default=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=50)),
+                (
+                    "active",
+                    models.BooleanField(
+                        choices=[(True, "Yes"), (False, "No")], default=True
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='NetChange',
+            name="NetChange",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('amount', models.DecimalField(decimal_places=5, max_digits=20)),
-                ('start_date', models.DateField()),
-                ('end_date', models.DateField()),
-                ('account', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='gl.account')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("amount", models.DecimalField(decimal_places=5, max_digits=20)),
+                ("start_date", models.DateField()),
+                ("end_date", models.DateField()),
+                (
+                    "account",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to="gl.account"
+                    ),
+                ),
             ],
         ),
         migrations.AddField(
-            model_name='account',
-            name='proration_type',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='gl.prorationtype'),
+            model_name="account",
+            name="proration_type",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                to="gl.prorationtype",
+            ),
         ),
     ]
