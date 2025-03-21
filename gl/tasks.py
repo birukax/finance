@@ -15,9 +15,9 @@ def fetch_accounts():
             data = response.json()
             for acc in data["value"]:
                 # print(acc)
-                account, updated = Account.objects.update_or_create(
-                    name=acc["Name"], defaults={"no": acc["No"]}
-                )
+                account, updated = Account.objects.filter(
+                    no=acc["No"]
+                ).update_or_create(name=acc["Name"], no=acc["No"])
                 print(account.name, account.no)
     except Exception as e:
         print(e)
@@ -39,7 +39,11 @@ def fetch_net_changes(start_date, end_date):
                 amount = 0
                 for a in data["value"]:
                     amount = amount + float(a["Amount"])
-                net_change, updated = NetChange.objects.update_or_create(
+                net_change, updated = NetChange.objects.filter(
+                    account=acc,
+                    start_date=start_date,
+                    end_date=end_date,
+                ).update_or_create(
                     account=acc,
                     amount=amount,
                     start_date=start_date,

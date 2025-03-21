@@ -26,7 +26,7 @@ SECRET_KEY = "django-insecure-i0^(xz69v$vh%ixkb(rbk$v_h$y^aq5m&nw&%y%_ad5%n1&*^x
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG")
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "compressor",
     "django_filters",
     "django_select2",
+    "account",
     "gl",
     "production",
 ]
