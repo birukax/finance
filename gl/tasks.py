@@ -4,7 +4,7 @@ from requests_ntlm import HttpNtlmAuth
 from .models import Account, ProrationType, NetChange
 
 
-def get_accounts():
+def fetch_accounts():
     url = config("GL_ACCOUNT")
     user = config("NAV_USER")
     password = config("NAV_PASSWORD")
@@ -23,7 +23,7 @@ def get_accounts():
         print(e)
 
 
-def get_net_changes(start_date, end_date):
+def fetch_net_changes(start_date, end_date):
     url = config("GL_ENTRY")
     user = config("NAV_USER")
     password = config("NAV_PASSWORD")

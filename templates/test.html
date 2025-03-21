@@ -1,12 +1,15 @@
 {% extends "main/base.html" %}
 {% block content %}
-    <a href="{% url 'gl:test2' %}" class="">refresh</a>
+    <a href="{% url 'production:get_items' %}" class="">refresh</a>
     <div class="w-full mx-auto">
-        {% comment %} {% for nc in net_changes %}
-            <div>{{ nc.account.name }}</div>
-            <div>{{ nc.amount }}</div>
-            <div>{{ nc.start_date }}</div>
-            <div>{{ nc.end_date }}</div>
-        {% endfor %} {% endcomment %}
+        {% for order in orders %}
+            <div>{{ order.no }}</div>
+            <div>{{ order.item.name }}</div>
+        {% endfor %}
+        {% for routing in routings %}
+            <div>{{ routing.order.no }}</div>
+            <div>{{ routing.order.item.name }}</div>
+            <div>{{ routing.machine_center_no }}</div>
+        {% endfor %}
     </div>
 {% endblock content %}

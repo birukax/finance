@@ -14,12 +14,13 @@ class Location(models.Model):
 class Order(models.Model):
     no = models.CharField(max_length=30)
     item = models.ForeignKey("production.Item", on_delete=models.RESTRICT)
+    location = models.ForeignKey("production.Location", on_delete=models.RESTRICT)
 
 
 class Routing(models.Model):
     order = models.ForeignKey("production.Order", on_delete=models.RESTRICT)
     operation_no = models.IntegerField(default=0)
-    machine_center_code = models.CharField(max_length=75)
+    machine_center_no = models.CharField(max_length=75)
     machine_center_name = models.CharField(max_length=75)
     work_center_code = models.CharField(max_length=75)
     work_center_group_code = models.CharField(max_length=75)
