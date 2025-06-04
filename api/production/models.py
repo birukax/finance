@@ -1,23 +1,24 @@
 from django.db import models
+from main.models import BaseCreatedUpdated
 
 
-class Item(models.Model):
+class Item(BaseCreatedUpdated):
     no = models.CharField(max_length=30)
     name = models.CharField(max_length=50)
 
 
-class Location(models.Model):
+class Location(BaseCreatedUpdated):
     code = models.CharField(max_length=30)
     name = models.CharField(max_length=50)
 
 
-class Order(models.Model):
+class Order(BaseCreatedUpdated):
     no = models.CharField(max_length=30)
     item = models.ForeignKey("production.Item", on_delete=models.RESTRICT)
     location = models.ForeignKey("production.Location", on_delete=models.RESTRICT)
 
 
-class Routing(models.Model):
+class Routing(BaseCreatedUpdated):
     order = models.ForeignKey("production.Order", on_delete=models.RESTRICT)
     operation_no = models.IntegerField(default=0)
     machine_center_no = models.CharField(max_length=75)
@@ -26,7 +27,7 @@ class Routing(models.Model):
     work_center_group_code = models.CharField(max_length=75)
 
 
-class Output(models.Model):
+class Output(BaseCreatedUpdated):
     entry_no = models.CharField(max_length=30)
     order = models.ForeignKey("production.Order", on_delete=models.RESTRICT)
     location = models.ForeignKey("production.Location", on_delete=models.RESTRICT)
@@ -34,7 +35,7 @@ class Output(models.Model):
     quantity = models.IntegerField(default=0)
 
 
-class LabelPerHour(models.Model):
+class LabelPerHour(BaseCreatedUpdated):
     item = models.ForeignKey("production.Item", on_delete=models.RESTRICT)
     location = models.ForeignKey("production.Location", on_delete=models.RESTRICT)
     quantity = models.IntegerField(default=0)

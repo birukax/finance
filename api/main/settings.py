@@ -170,8 +170,8 @@ REST_FRAMEWORK = {
         "rest_framework.filters.SearchFilter",
         "rest_framework.filters.OrderingFilter",
     ],
-    "DEFAULT_PAGINATION_CLASS": "main.pagination.OptionalPagination",
-    "PAGE_SIZE": 35,
+    # "DEFAULT_PAGINATION_CLASS": "main.pagination.OptionalPagination",
+    # "PAGE_SIZE": 35,
 }
 
 ACCOUNT_AUTHENTICATION_METHOD = "username"

@@ -1,11 +1,11 @@
 from django.db import models
 from django.db.models.functions import Lower
-
+from main.models import BaseCreatedUpdated
 
 YESNO = ((True, "Yes"), (False, "No"))
 
 
-class ProrationType(models.Model):
+class ProrationType(BaseCreatedUpdated):
     name = models.CharField(max_length=50, unique=True)
     active = models.BooleanField(choices=YESNO, default=True)
 
@@ -19,7 +19,7 @@ class ProrationType(models.Model):
         ]
 
 
-class Account(models.Model):
+class Account(BaseCreatedUpdated):
     no = models.CharField(max_length=20, unique=True)
     name = models.CharField(max_length=100)
     proration_type = models.ForeignKey(
@@ -34,13 +34,11 @@ class Account(models.Model):
         ordering = ["no"]
 
 
-class NetChange(models.Model):
+class NetChange(BaseCreatedUpdated):
     account = models.ForeignKey("gl.Account", on_delete=models.CASCADE)
     amount = models.DecimalField(decimal_places=5, max_digits=20)
     start_date = models.DateField()
     end_date = models.DateField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f"{self.account.no} - {self.amount}"
