@@ -1,55 +1,85 @@
 import datetime
-from django.shortcuts import render, redirect, get_object_or_404
+from django.db.models import Sum
+from rest_framework import serializers, status, viewsets
+from rest_framework.decorators import action
+from rest_framework.response import Response
 from .models import ProrationType, Account, NetChange
 from .tasks import fetch_accounts, fetch_net_changes
-from .forms import EditAccount, EditProrationType, CreateProrationType
-from main.tasks import edit_model, create_model
+from .serializers import ProrationTypeSerializer, AccountSerializer, NetChangeSerializer
 
 
-def account_list(request):
-    accounts = Account.objects.all()
+class ProrationTypeViewSet(viewsets.ModelViewSet):
+    serializer_class = ProrationTypeSerializer
+    queryset = ProrationType.objects.all()
 
-    context = {
-        "accounts": accounts,
-    }
-    return render(request, "account/list.html", context)
-
-
-def edit_account(request, id):
-    account = get_object_or_404(Account, id=id)
-    edit_model(
-        request,
-        account,
-        EditAccount,
-        "gl:account_list",
-        "account/edit.html",
-    )
+    search_fields = ["name"]
+    filterset_fields = ["active"]
 
 
-def proration_type_list(request):
-    proration_types = ProrationType.objects.all()
+class AccountViewSet(viewsets.ModelViewSet):
+    serializer_class = AccountSerializer
+    queryset = Account.objects.all()
 
-    context = {
-        "proration_types": proration_types,
-    }
-    return render(request, "proration_type/list.html", context)
+    search_fields = ["no", "name", "proration_type__name"]
+    filterset_fields = ["active"]
+
+    def perform_create(self, serializer):
+        proration_type_id = serializer.validated_data.pop("proration_type_id")
+
+        try:
+            proration_type = ProrationType.objects.get(id=proration_type_id)
+        except ProrationType.DoesNotExist:
+            raise serializers.ValidationError(
+                {"proration_type_id": "Proration type does not exist."}
+            )
+        except Exception as e:
+            raise serializers.ValidationError({"error": str(e)})
+
+        serializer.is_valid(raise_exception=True)
+        serializer.save(proration_type=proration_type)
+
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    @action(detail=False, method=["POST"])
+    def update_accounts(self, request):
+        try:
+            fetch_accounts()
+        except Exception as e:
+            raise serializers.ValidationError({"error": str(e)})
+
+        serializer = self.get_serializer(self.queryset)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-def create_proration_type(request):
-    create_model(
-        request,
-        CreateProrationType,
-        "gl:proration_type_list",
-        "proration_type/create.html",
-    )
+class NetChangeViewSet(viewsets.ModelViewSet):
+    serializer_class = NetChangeSerializer
+    queryset = NetChange.objects.all()
 
+    search_fields = ["amount", "account__no", "account__name"]
+    filterset_fields = ["start_date", "end_date"]
 
-def edit_proration_type(request):
-    proration_type = get_object_or_404(ProrationType, id=id)
-    edit_model(
-        request,
-        proration_type,
-        EditProrationType,
-        "gl:proration_type_list",
-        "proration_type/edit.html",
-    )
+    def perform_create(self, serializer):
+        account_id = serializer.validated_data.pop("account_id")
+
+        try:
+            account = Account.objects.get(id=account_id)
+        except Account.DoesNotExist:
+            raise serializers.ValidationError({"account_id": "Account does not exist."})
+        except Exception as e:
+            raise serializers.ValidationError({"error": str(e)})
+
+        serializer.is_valid(raise_exception=True)
+        serializer.save(account=account)
+
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    @action(detail=False, method="POST")
+    def update_net_changes(self, request):
+        try:
+            fetch_net_changes()
+        except Exception as e:
+            raise serializers.ValidationError({"error": str(e)})
+
+        serializer = self.get_serializer(self.queryset)
+        return Response(serializer.data, status=status.HTTP_200_OK)

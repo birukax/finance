@@ -1,8 +1,7 @@
 import requests
 from decouple import config
 from requests_ntlm import HttpNtlmAuth
-from .models import Account, ProrationType, NetChange
-
+from .models import Account, NetChange
 
 def fetch_accounts():
     url = config("GL_ACCOUNT")
@@ -49,8 +48,8 @@ def fetch_net_changes(start_date, end_date):
                     start_date=start_date,
                     end_date=end_date,
                 )
-                print(net_change.account.name, net_change.amount)
-            else:
-                print(response.text)
+                # print(net_change.account.name, net_change.amount)
+            # else:
+            #     print(response.text)
     except Exception as e:
         print(e)
