@@ -70,7 +70,7 @@ def fetch_orders():
         print(e)
 
 
-def fetch_routing():
+def fetch_routings():
     url = config("ROUTINGS")
     try:
         response = requests.get(url, auth=autenticate_api())
@@ -99,7 +99,7 @@ def fetch_routing():
         print(e)
 
 
-def fetch_output():
+def fetch_outputs():
     url = config("OUTPUTS")
     try:
         response = requests.get(url, auth=autenticate_api())
