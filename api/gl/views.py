@@ -40,7 +40,7 @@ class AccountViewSet(viewsets.ModelViewSet):
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-    @action(detail=False, method=["POST"])
+    @action(detail=False, methods=["POST"])
     def update_accounts(self, request):
         try:
             fetch_accounts()
@@ -74,7 +74,7 @@ class NetChangeViewSet(viewsets.ModelViewSet):
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-    @action(detail=False, method="POST")
+    @action(detail=False, methods="POST")
     def update_net_changes(self, request):
         try:
             fetch_net_changes()
