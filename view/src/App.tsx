@@ -1,17 +1,16 @@
-import { useState } from 'react'
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Login from './pages/account/Login';
-import Dashboard from './pages/Dashboard';
-// import './App.css'
+import MainRoutes from './pages/MainRoutes';
+import './App.css'
 
-function App() {
+const App: React.FC = () => {
 
   return (
     <Routes>
       <Route path='/login' element={<Login />} />
-      <Route path='/' element={<Dashboard />} />
+      {MainRoutes}
     </Routes>
   )
 }
 
-export default App
+export default App;

@@ -18,7 +18,7 @@ const initialState: AuthState = {
 
 export const login = createAsyncThunk('auth/login', async (formData, { rejectWithValue }) => {
     try {
-        const response = await api.post('/api/token/', { formData })
+        const response = await api.post('/api/token/',  formData )
         return response.data;
     }
     catch (error) {

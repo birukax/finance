@@ -27,7 +27,7 @@ const Login = () => {
         e.preventDefault();
         try {
             await dispatch(login(formData)).unwrap();
-            navigate("/dashboard/");
+            navigate("");
         } catch (error) {
             console.log(error);
         }
