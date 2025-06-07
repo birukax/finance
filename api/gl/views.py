@@ -47,9 +47,9 @@ class AccountViewSet(viewsets.ModelViewSet):
         except Exception as e:
             raise serializers.ValidationError({"error": str(e)})
 
-        serializer = self.get_serializer(self.queryset)
+        # serializer = self.serializer_class(self.queryset)
 
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_200_OK)
 
 
 class NetChangeViewSet(viewsets.ModelViewSet):

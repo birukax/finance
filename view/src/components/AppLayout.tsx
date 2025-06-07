@@ -2,15 +2,14 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { AppState, AppDispatch } from '../utils/store';
 import { useNavigate, useLocatoin, Link, useSearchParams } from 'react-router-dom';
-import { logout } from '../pages/account/slice';
+import { logout } from '../pages/user/slices';
 import { ToastContainer } from 'react-toastify';
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
-import {AppSidebar} from './AppSidebar';
+import { AppSidebar } from './AppSidebar';
 
 
 const AppLayout = ({ children }) => {
     const tokens = useSelector((state: AppState) => state.auth.tokens);
-    const [mobileOpen, setMobileOpen] = useState(false);
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate()
     useEffect(() => {
@@ -23,11 +22,13 @@ const AppLayout = ({ children }) => {
         dispatch(logout());
     }
     return (
-        <SidebarProvider>
+        <SidebarProvider  >
             <AppSidebar />
-            <main>
-                <SidebarTrigger />
-                {children}
+            <main className='w-full'>
+                <div className='w-full p-4'>
+                    <SidebarTrigger />
+                    {children}
+                </div>
             </main>
         </SidebarProvider>
     )

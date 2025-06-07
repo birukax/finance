@@ -14,6 +14,11 @@ const items = [
         title: 'Dashboard',
         url: '',
         iconName: 'layout-dashboard'
+    },
+    {
+        title: 'Accounts',
+        url: '/account/list',
+        iconName: 'credit-card',
     }
 ]
 

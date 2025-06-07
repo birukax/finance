@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-i0^(xz69v$vh%ixkb(rbk$v_h$y^aq5m&nw&%y%_ad5%n1&*^x"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config("DEBUG") or False
+DEBUG = config("DEBUG") or True
 
 ALLOWED_HOSTS = ["*"]
 
@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # "compressor",
+    "compressor",
     # "django_select2",
     "rest_framework",
     "rest_framework.authtoken",
@@ -89,8 +89,8 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "finance",
-        "HOST": config("DB_HOST"),
-        "USER": config("DB_USER"),
+        "HOST": config("DB_HOST") or 'localhost',
+        "USER": config("DB_USER") or 'postgres',
         "PASSWORD": config("DB_PASSWORD") or "password",
         "PORT": "5432",
     }

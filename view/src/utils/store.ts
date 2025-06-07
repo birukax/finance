@@ -1,14 +1,17 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { persistStore, persistReducer, type PersistConfig, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import authReducer from '../pages/account/slice';
+import authReducer from '../pages/user/slices';
+import accountReducer from '../pages/account/slices';
 
 interface RootState {
     auth: ReturnType<typeof authReducer>;
+    account: ReturnType<typeof accountReducer>;
 }
 
 const rootReducer = combineReducers({
     auth: authReducer,
+    account: accountReducer,
 })
 
 const persistConfig: PersistConfig<RootState> = {

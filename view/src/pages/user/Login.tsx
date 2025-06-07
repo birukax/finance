@@ -3,7 +3,7 @@ import { type AppState, type AppDispatch } from "../../utils/store";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { login } from "./slice";
+import { login } from "./slices";
 import { Button } from "@/components/ui/button";
 import {
     Card,
@@ -27,7 +27,7 @@ const Login = () => {
         e.preventDefault();
         try {
             await dispatch(login(formData)).unwrap();
-            navigate("");
+            navigate("/");
         } catch (error) {
             console.log(error);
         }

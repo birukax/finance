@@ -11,7 +11,7 @@ Django==5.1.7
 django-appconf==1.1.0
 django-compressor==4.5.1
 django-cors-headers==4.7.0
-django-decouple==2.1
+# django-decouple==2.1
 django-filter==25.1
 django-select2==8.4.0
 djangorestframework==3.16.0

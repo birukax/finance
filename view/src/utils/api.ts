@@ -1,6 +1,6 @@
-import axios, { type AxiosInstance, type AxiosResponse, type InternalAxiosRequestConfig } from 'axios';
+import axios, { AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import { store } from './store';
-import { setTokens, logout } from '../pages/account/slice';
+import { setTokens, logout } from '../pages/user/slices';
 interface Tokens {
     access: string;
     refresh: string;

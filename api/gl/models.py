@@ -25,10 +25,16 @@ class Account(BaseCreatedUpdated):
     proration_type = models.ForeignKey(
         "gl.ProrationType", on_delete=models.CASCADE, null=True, blank=True
     )
-    active = models.BooleanField(choices=YESNO, default=False)
+    active = models.BooleanField(choices=YESNO, default=True)
 
     def __str__(self):
-        return f"{self.no} - {self.name}"
+        if self.no and self.name:
+            return f"{self.no} - {self.name}"
+        if self.no:
+            return self.no
+        if self.name:
+            return self.name
+        return self
 
     class Meta:
         ordering = ["no"]

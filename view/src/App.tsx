@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
-import Login from './pages/account/Login';
+import Login from './pages/user/Login';
 import MainRoutes from './pages/MainRoutes';
+import AccountRoutes from './pages/account/Routes';
 import './App.css'
 
 const App: React.FC = () => {
@@ -9,6 +10,7 @@ const App: React.FC = () => {
     <Routes>
       <Route path='/login' element={<Login />} />
       {MainRoutes}
+      {AccountRoutes}
     </Routes>
   )
 }

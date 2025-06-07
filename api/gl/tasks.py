@@ -3,6 +3,7 @@ from decouple import config
 from requests_ntlm import HttpNtlmAuth
 from .models import Account, NetChange
 
+
 def fetch_accounts():
     url = config("GL_ACCOUNT")
     user = config("NAV_USER")
@@ -16,10 +17,12 @@ def fetch_accounts():
                 # print(acc)
                 account, updated = Account.objects.filter(
                     no=acc["No"]
-                ).update_or_create(name=acc["Name"], no=acc["No"])
+                ).update_or_create(name=acc["Name"], no=acc["No"], active=True)
                 print(account.name, account.no)
     except Exception as e:
+        print("exception here")
         print(e)
+        print("exception here")
 
 
 def fetch_net_changes(start_date, end_date):
