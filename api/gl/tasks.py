@@ -17,12 +17,10 @@ def fetch_accounts():
                 # print(acc)
                 account, updated = Account.objects.filter(
                     no=acc["No"]
-                ).update_or_create(name=acc["Name"], no=acc["No"], active=True)
+                ).update_or_create(name=acc["Name"], no=acc["No"])
                 print(account.name, account.no)
     except Exception as e:
-        print("exception here")
         print(e)
-        print("exception here")
 
 
 def fetch_net_changes(start_date, end_date):

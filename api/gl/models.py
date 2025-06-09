@@ -37,7 +37,7 @@ class Account(BaseCreatedUpdated):
         return self
 
     class Meta:
-        ordering = ["no"]
+        ordering = ["-created_at"]
 
 
 class NetChange(BaseCreatedUpdated):

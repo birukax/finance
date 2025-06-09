@@ -38,18 +38,15 @@ class AccountViewSet(viewsets.ModelViewSet):
         serializer.is_valid(raise_exception=True)
         serializer.save(proration_type=proration_type)
 
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-
     @action(detail=False, methods=["POST"])
     def update_accounts(self, request):
         try:
             fetch_accounts()
         except Exception as e:
             raise serializers.ValidationError({"error": str(e)})
+        serializer = self.serializer_class(self.queryset, many=True)
 
-        # serializer = self.serializer_class(self.queryset)
-
-        return Response(status=status.HTTP_200_OK)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class NetChangeViewSet(viewsets.ModelViewSet):
@@ -72,8 +69,6 @@ class NetChangeViewSet(viewsets.ModelViewSet):
         serializer.is_valid(raise_exception=True)
         serializer.save(account=account)
 
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-
     @action(detail=False, methods="POST")
     def update_net_changes(self, request):
         try:
@@ -81,5 +76,5 @@ class NetChangeViewSet(viewsets.ModelViewSet):
         except Exception as e:
             raise serializers.ValidationError({"error": str(e)})
 
-        serializer = self.get_serializer(self.queryset)
+        serializer = self.get_serializer(self.queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
