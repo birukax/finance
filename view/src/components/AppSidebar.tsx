@@ -1,5 +1,5 @@
 import { DynamicIcon } from 'lucide-react/dynamic';
-
+import { Link } from 'react-router-dom';
 import {
     Sidebar,
     SidebarContent,
@@ -39,11 +39,11 @@ export const AppSidebar = () => {
                 <SidebarMenu>
                     {items.map((item) => (
                         <SidebarMenuItem key={item.title}>
-                            <SidebarMenuButton asChild>
-                                <a href={item.url} className="w-fit h-fit justify-items-stretch ">
+                            <SidebarMenuButton asChild className='w-full justify-start'>
+                                <Link to={item.url} className="flex items-center gap-2 ">
                                     <DynamicIcon name={item.iconName} className="!w-auto !h-6 " />
-                                    <p className='text-lg'>{item.title}</p>
-                                </a>
+                                    <span className='text-lg'>{item.title}</span>
+                                </Link>
                             </SidebarMenuButton>
                         </SidebarMenuItem>
                     ))}

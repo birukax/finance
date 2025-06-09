@@ -35,7 +35,7 @@ const List = () => {
     return (
         <div className='w-auto h-full '>
             <h2 className='text-lg' >Account List</h2>
-            <Button onClick={() => handleUpdate()}> Update List</Button>
+            <Button size='sm' onClick={() => handleUpdate()}> Update List</Button>
             <Table>
                 <TableCaption> A list of all NAV Accounts.</TableCaption>
                 <TableHeader className='text-gray-200 bg-gray-100'>
