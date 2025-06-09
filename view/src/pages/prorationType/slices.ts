@@ -28,7 +28,7 @@ export const fetchProrationTypes = createAsyncThunk('prorationType/fetchProratio
 
 export const fetchProrationType = createAsyncThunk('prorationType/fetchProrationType', async (id, { rejectWithValue }) => {
     try {
-        const response = await api.get(`/gl/proration-types/${id}`);
+        const response = await api.get(`/gl/proration-types/${id}/`);
         return response.data;
     } catch (error) {
         return rejectWithValue(error?.response?.data || 'Failed to fetch Proration Type.');

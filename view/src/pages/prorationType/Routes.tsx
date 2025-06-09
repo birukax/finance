@@ -1,17 +1,27 @@
 import { Route } from 'react-router-dom';
 import List from './List';
+import Create from './Create';
 import ProtectedRoute from '@/components/ProtectedRoute';
 
-const AccountRoutes = [
+const ProrationTypeRoutes = [
     <Route
-        key='account-list'
-        path='account/list'
+        key='proration-type-list'
+        path='proration-type/list'
         element={
             <ProtectedRoute>
                 <List />
             </ProtectedRoute>
         }
+    />,
+    <Route
+        key='proration-type-create'
+        path='proration-type/create'
+        element={
+            <ProtectedRoute>
+                <Create />
+            </ProtectedRoute>
+        }
     />
 ]
 
-export default AccountRoutes;
+export default ProrationTypeRoutes;

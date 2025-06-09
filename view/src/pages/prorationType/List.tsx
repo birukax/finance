@@ -3,57 +3,50 @@ import { AppState, AppDispatch } from '../../utils/store';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
-import { fetchAccounts, updateAccounts } from './slices';
+import { fetchProrationTypes } from './slices';
 import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Button } from '@/components/ui/button'
-
+import { Plus } from 'lucide-react';
 
 const List = () => {
-    const accounts = useSelector((state: AppState) => state.account.accounts)
+    const prorationTypes = useSelector((state: AppState) => state.prorationType.prorationTypes)
     const navigate = useNavigate()
     const dispatch = useDispatch<AppDispatch>();
 
     useEffect(() => {
-        dispatch(fetchAccounts());
+        dispatch(fetchProrationTypes());
     }, [])
 
-    const handleUpdate = async () => {
-        try {
 
-            await dispatch(updateAccounts()).unwrap();
-            await dispatch(fetchAccounts()).unwrap();
-        } catch (error) {
-            console.log(error)
-        }
-
-    }
-
-    if (accounts.error != null) {
-        toast.error(JSON.stringify(accounts.error || 'Error'))
+    if (prorationTypes.error != null) {
+        toast.error(JSON.stringify(prorationTypes.error || 'Error'))
     }
 
     return (
         <div className='w-auto h-full '>
-            <h2 className='' >Account List</h2>
-            <Button onClick={() => handleUpdate()}> Update List</Button>
+            <h2 className='text-lg' >ProrationType List</h2>
+            <Button size='sm' asChild >
+                <a href='/proration-type/create'>
+                    <Plus />
+                    <span>
+                        New
+                    </span>
+                </a>
+            </Button>
             <Table>
-                <TableCaption> A list of all NAV Accounts.</TableCaption>
+                <TableCaption> A list of all Proration Types.</TableCaption>
                 <TableHeader className='text-gray-200 bg-gray-100'>
                     <TableRow className='text-base'>
-                        <TableHead >No.</TableHead>
                         <TableHead>Name</TableHead>
-                        <TableHead>Proration type</TableHead>
                         <TableHead>Active</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {accounts?.data != [] &&
-                        accounts?.data?.map((account) => (
-                            <TableRow key={account.id}>
-                                <TableCell>{account.no}</TableCell>
-                                <TableCell>{account.name}</TableCell>
-                                <TableCell>{account.proration_type ? account.proration_type.name : ''}</TableCell>
-                                <TableCell>{String(account.active)}</TableCell>
+                    {prorationTypes?.data != [] &&
+                        prorationTypes?.data?.map((prorationType) => (
+                            <TableRow key={prorationType.id}>
+                                <TableCell>{prorationType.name}</TableCell>
+                                <TableCell>{String(prorationType.active)}</TableCell>
                             </TableRow>
                         ))
                     }

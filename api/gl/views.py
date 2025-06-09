@@ -38,6 +38,21 @@ class AccountViewSet(viewsets.ModelViewSet):
         serializer.is_valid(raise_exception=True)
         serializer.save(proration_type=proration_type)
 
+    def perform_update(self, serializer):
+        proration_type_id = serializer.validated_data.pop("proration_type_id")
+
+        try:
+            proration_type = ProrationType.objects.get(id=proration_type_id)
+        except ProrationType.DoesNotExist:
+            raise serializers.ValidationError(
+                {"proration_type_id": "Proration type does not exist."}
+            )
+        except Exception as e:
+            raise serializers.ValidationError({"error": str(e)})
+
+        serializer.is_valid(raise_exception=True)
+        serializer.save(proration_type=proration_type)
+
     @action(detail=False, methods=["POST"])
     def update_accounts(self, request):
         try:

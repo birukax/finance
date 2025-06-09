@@ -34,7 +34,7 @@ const List = () => {
 
     return (
         <div className='w-auto h-full '>
-            <h2 className='' >Account List</h2>
+            <h2 className='text-lg' >Account List</h2>
             <Button onClick={() => handleUpdate()}> Update List</Button>
             <Table>
                 <TableCaption> A list of all NAV Accounts.</TableCaption>
@@ -44,6 +44,7 @@ const List = () => {
                         <TableHead>Name</TableHead>
                         <TableHead>Proration type</TableHead>
                         <TableHead>Active</TableHead>
+                        <TableHead>Actions</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -54,6 +55,7 @@ const List = () => {
                                 <TableCell>{account.name}</TableCell>
                                 <TableCell>{account.proration_type ? account.proration_type.name : ''}</TableCell>
                                 <TableCell>{String(account.active)}</TableCell>
+                                <TableCell className="items-center"><Button variant='link' size="sm" onClick={() => navigate(`/account/${account.id}/edit`)}>Edit</Button></TableCell>
                             </TableRow>
                         ))
                     }

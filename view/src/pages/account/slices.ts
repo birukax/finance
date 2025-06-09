@@ -27,10 +27,18 @@ export const fetchAccounts = createAsyncThunk('account/fetchAccounts', async (pa
 })
 export const fetchAccount = createAsyncThunk('account/fetchAccount', async (id, { rejectWithValue }) => {
     try {
-        const response = await api.get(`/gl/accounts/${id}`);
+        const response = await api.get(`/gl/accounts/${id}/`);
         return response.data;
     } catch (error) {
         return rejectWithValue(error?.response?.data || 'Failed to fetch Account.');
+    }
+})
+export const updateAccount = createAsyncThunk('account/updateAccount', async ({ id, formData }, { rejectWithValue }) => {
+    try {
+        const response = await api.patch(`/gl/accounts/${id}/`, formData)
+        return response.data;
+    } catch (error) {
+        return rejectWithValue(error?.response?.data || 'Failed to update the Account.')
     }
 })
 
@@ -77,6 +85,22 @@ const accountSlice = createSlice({
                 state.account.data = action.payload;
             })
             .addCase(fetchAccount.rejected, (state, action) => {
+                state.account.loading = false;
+                state.account.error = action.payload || 'Unknown error';
+                state.account.data = []
+            })
+            .addCase(updateAccount.pending, (state) => {
+                state.account.loading = true;
+                state.account.error = null;
+                state.account.data = []
+
+            })
+            .addCase(updateAccount.fulfilled, (state, action: PayloadAction<[]>) => {
+                state.account.loading = false;
+                state.account.error = null;
+                state.account.data = action.payload;
+            })
+            .addCase(updateAccount.rejected, (state, action) => {
                 state.account.loading = false;
                 state.account.error = action.payload || 'Unknown error';
                 state.account.data = []

@@ -19,6 +19,11 @@ const items = [
         title: 'Accounts',
         url: '/account/list',
         iconName: 'credit-card',
+    },
+    {
+        title: 'Proration Types',
+        url: '/proration-type/list',
+        iconName: 'chart-bar-stacked',
     }
 ]
 
@@ -37,7 +42,7 @@ export const AppSidebar = () => {
                             <SidebarMenuButton asChild>
                                 <a href={item.url} className="w-fit h-fit justify-items-stretch ">
                                     <DynamicIcon name={item.iconName} className="!w-auto !h-6 " />
-                                    <p className='text-xl'>{item.title}</p>
+                                    <p className='text-lg'>{item.title}</p>
                                 </a>
                             </SidebarMenuButton>
                         </SidebarMenuItem>
