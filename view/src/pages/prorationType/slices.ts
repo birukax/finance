@@ -44,12 +44,12 @@ export const createProrationType = createAsyncThunk('prorationType/createProrati
     }
 })
 
-export const updateProrationType = createAsyncThunk('prorationType/updateProrationType', async (id, formData, { rejectWithValue }) => {
+export const updateProrationType = createAsyncThunk('prorationType/updateProrationType', async ({ id, formData }, { rejectWithValue }) => {
     try {
         const response = await api.patch(`/gl/proration-types/${id}/`, formData);
         return response.data;
     } catch (error) {
-        return rejectWithValue(error?.response?.data || 'Failed to update Proration Type.')
+        return rejectWithValue(error?.response?.data || 'Failed to update Proration Type.');
     }
 })
 
@@ -91,21 +91,35 @@ const prorationTypeSlice = createSlice({
                 state.prorationType.error = action.payload || 'Unknown error';
                 state.prorationType.data = []
             })
-            .addCase(updateProrationTypes.pending, (state) => {
-                state.prorationTypes.loading = true;
-                state.prorationTypes.error = null;
-                state.prorationTypes.data = []
-
+            .addCase(createProrationType.pending, (state) => {
+                state.prorationType.loading = true;
+                state.prorationType.error = null;
+                state.prorationType.data = []
             })
-            .addCase(updateProrationTypes.fulfilled, (state, action: PayloadAction<[]>) => {
-                state.prorationTypes.loading = false;
-                state.prorationTypes.error = null;
-                state.prorationTypes.data = action.payload;
+            .addCase(createProrationType.fulfilled, (state, action: PayloadAction<[]>) => {
+                state.prorationType.loading = false;
+                state.prorationType.error = null;
+                state.prorationType.data = action.payload;
             })
-            .addCase(updateProrationTypes.rejected, (state, action) => {
-                state.prorationTypes.loading = false;
-                state.prorationTypes.error = action.payload || 'Unknown error';
-                state.prorationTypes.data = []
+            .addCase(createProrationType.rejected, (state, action) => {
+                state.prorationType.loading = false;
+                state.prorationType.error = action.payload || 'Unknown error';
+                state.prorationType.data = []
+            })
+            .addCase(updateProrationType.pending, (state) => {
+                state.prorationType.loading = true;
+                state.prorationType.error = null;
+                state.prorationType.data = []
+            })
+            .addCase(updateProrationType.fulfilled, (state, action: PayloadAction<[]>) => {
+                state.prorationType.loading = false;
+                state.prorationType.error = null;
+                state.prorationType.data = action.payload;
+            })
+            .addCase(updateProrationType.rejected, (state, action) => {
+                state.prorationType.loading = false;
+                state.prorationType.error = action.payload || 'Unknown error';
+                state.prorationType.data = []
             })
     }
 })
