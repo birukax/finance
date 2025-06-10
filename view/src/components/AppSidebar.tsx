@@ -24,6 +24,31 @@ const items = [
         title: 'Proration Types',
         url: '/proration-type/list',
         iconName: 'chart-bar-stacked',
+    },
+    {
+        title: 'Items',
+        url: '/item/list',
+        iconName: 'shapes',
+    },
+    {
+        title: 'Locations',
+        url: '/location/list',
+        iconName: 'map-pin',
+    },
+    {
+        title: 'Orders',
+        url: '/order/list',
+        iconName: 'shopping-cart',
+    },
+    {
+        title: 'Routings',
+        url: '/routing/list',
+        iconName: 'route',
+    },
+    {
+        title: 'Outputs',
+        url: '/output/list',
+        iconName: 'shopping-basket'
     }
 ]
 
@@ -41,8 +66,8 @@ export const AppSidebar = () => {
                         <SidebarMenuItem key={item.title}>
                             <SidebarMenuButton asChild className='w-full justify-start'>
                                 <Link to={item.url} className="flex items-center gap-2 ">
-                                    <DynamicIcon name={item.iconName} className="!w-auto !h-6 " />
-                                    <span className='text-lg'>{item.title}</span>
+                                    <DynamicIcon name={item.iconName} className="!w-auto !h-5 " />
+                                    <span className='text-base'>{item.title}</span>
                                 </Link>
                             </SidebarMenuButton>
                         </SidebarMenuItem>
