@@ -9,14 +9,14 @@ class ProrationType(BaseCreatedUpdated):
     name = models.CharField(max_length=50, unique=True)
     active = models.BooleanField(choices=YESNO, default=True)
 
-    def __str__(self):
-        return self.name
-
     class Meta:
         ordering = ["-name"]
         constraints = [
             models.UniqueConstraint(Lower("name"), name="unique_case_insensitive_name")
         ]
+
+    def __str__(self):
+        return self.name
 
 
 class Account(BaseCreatedUpdated):
@@ -27,6 +27,9 @@ class Account(BaseCreatedUpdated):
     )
     active = models.BooleanField(choices=YESNO, default=True)
 
+    class Meta:
+        ordering = ["no"]
+
     def __str__(self):
         if self.no and self.name:
             return f"{self.no} - {self.name}"
@@ -36,9 +39,6 @@ class Account(BaseCreatedUpdated):
             return self.name
         return self
 
-    class Meta:
-        ordering = ["no"]
-
 
 class NetChange(BaseCreatedUpdated):
     account = models.ForeignKey("gl.Account", on_delete=models.CASCADE)
@@ -46,8 +46,8 @@ class NetChange(BaseCreatedUpdated):
     start_date = models.DateField()
     end_date = models.DateField()
 
-    def __str__(self):
-        return f"{self.account.no} - {self.amount}"
-
     class Meta:
         ordering = ["-updated_at", "-created_at"]
+
+    def __str__(self):
+        return f"{self.account.no} - {self.amount}"

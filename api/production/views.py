@@ -34,8 +34,7 @@ class ItemViewSet(viewsets.ModelViewSet):
             fetch_items()
         except Exception as e:
             raise serializers.ValidationError({"error": str(e)})
-
-        serializer = self.get_serializer(self.queryset)
+        serializer = self.serializer_class(self.queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
@@ -53,7 +52,7 @@ class LocationViewSet(viewsets.ModelViewSet):
         except Exception as e:
             raise serializers.ValidationError({"error": str(e)})
 
-        serializer = self.get_serializer(self.queryset)
+        serializer = self.serializer_class(self.queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
@@ -92,7 +91,7 @@ class OrderViewSet(viewsets.ModelViewSet):
         except Exception as e:
             raise serializers.ValidationError({"error": str(e)})
 
-        serializer = self.get_serializer(self.queryset)
+        serializer = self.serializer_class(self.queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
@@ -128,7 +127,7 @@ class RoutingViewSet(viewsets.ModelViewSet):
         except Exception as e:
             raise serializers.ValidationError({"error": str(e)})
 
-        serializer = self.get_serializer(self.queryset)
+        serializer = self.serializer_class(self.queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
@@ -172,7 +171,7 @@ class OutputViewSet(viewsets.ModelViewSet):
         except Exception as e:
             raise serializers.ValidationError({"error": str(e)})
 
-        serializer = self.get_serializer(self.queryset)
+        serializer = self.serializer_class(self.queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 

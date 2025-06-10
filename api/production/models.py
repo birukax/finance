@@ -6,16 +6,38 @@ class Item(BaseCreatedUpdated):
     no = models.CharField(max_length=30)
     name = models.CharField(max_length=50)
 
+    class Meta:
+        ordering = ["-no"]
+
+    def __str__(self):
+        if self.name:
+            return f"{self.no} - {self.name}"
+        return self.no
+
 
 class Location(BaseCreatedUpdated):
     code = models.CharField(max_length=30)
     name = models.CharField(max_length=50)
+
+    class Meta:
+        ordering = ["code"]
+
+    def __str__(self):
+        return self.code
 
 
 class Order(BaseCreatedUpdated):
     no = models.CharField(max_length=30)
     item = models.ForeignKey("production.Item", on_delete=models.RESTRICT)
     location = models.ForeignKey("production.Location", on_delete=models.RESTRICT)
+
+    class Meta:
+        ordering = ["-no"]
+
+    def __str__(self):
+        if self.item:
+            return f"{self.no} - {self.item.name}"
+        return self.no
 
 
 class Routing(BaseCreatedUpdated):
@@ -26,6 +48,12 @@ class Routing(BaseCreatedUpdated):
     work_center_code = models.CharField(max_length=75)
     work_center_group_code = models.CharField(max_length=75)
 
+    class Meta:
+        ordering = ['-order__no',"operation_no"]
+
+    def __str__(self):
+        return self.operation_no
+
 
 class Output(BaseCreatedUpdated):
     entry_no = models.CharField(max_length=30)
@@ -34,8 +62,21 @@ class Output(BaseCreatedUpdated):
     uom = models.CharField(max_length=20)
     quantity = models.IntegerField(default=0)
 
+    class Meta:
+        ordering = ["-entry_no"]
+
+    def __str__(self):
+        return f"{self.order.no} - {self.quantity}"
+
 
 class LabelPerHour(BaseCreatedUpdated):
     item = models.ForeignKey("production.Item", on_delete=models.RESTRICT)
     location = models.ForeignKey("production.Location", on_delete=models.RESTRICT)
     quantity = models.IntegerField(default=0)
+
+    class Meta:
+        ordering = ["-item__no", "location__code"]
+
+    def __str__(self):
+        if self.item and self.location:
+            return f"{self.item.name} - {self.location.code}"
