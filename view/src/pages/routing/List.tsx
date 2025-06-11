@@ -45,6 +45,8 @@ const List = () => {
                         <TableHead>Operation No.</TableHead>
                         <TableHead>Machine Center No.</TableHead>
                         <TableHead>Machine Center Name</TableHead>
+                        <TableHead>Work Center Code</TableHead>
+                        <TableHead>Work Center Group Code</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -56,6 +58,8 @@ const List = () => {
                                 <TableCell>{routing.operation_no}</TableCell>
                                 <TableCell>{routing.machine_center_no}</TableCell>
                                 <TableCell>{routing.machine_center_name}</TableCell>
+                                <TableCell>{routing.work_center_code}</TableCell>
+                                <TableCell>{routing.work_center_group_code}</TableCell>
                             </TableRow>
                         ))
                     }

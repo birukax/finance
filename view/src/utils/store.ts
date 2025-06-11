@@ -3,32 +3,35 @@ import { persistStore, persistReducer, type PersistConfig, FLUSH, REHYDRATE, PAU
 import storage from 'redux-persist/lib/storage';
 import authReducer from '../pages/user/slices';
 import itemReducer from '../pages/item/slices';
-import routingReducer from '../pages/routing/slices';
 import orderReducer from '../pages/order/slices';
 import outputReducer from '../pages/output/slices';
+import routingReducer from '../pages/routing/slices';
 import accountReducer from '../pages/account/slices';
 import locationReducer from '../pages/location/slices';
 import prorationTypeReducer from '../pages/prorationType/slices';
+import labelPerHourReducer from '../pages/labelPerHour/slices';
 
 interface RootState {
     auth: ReturnType<typeof authReducer>;
     item: ReturnType<typeof itemReducer>;
-    routing: ReturnType<typeof routingReducer>;
     order: ReturnType<typeof orderReducer>;
     output: ReturnType<typeof outputReducer>;
+    routing: ReturnType<typeof routingReducer>;
     account: ReturnType<typeof accountReducer>;
     location: ReturnType<typeof locationReducer>;
+    labelPerHour: ReturnType<typeof labelPerHourReducer>;
     prorationType: ReturnType<typeof prorationTypeReducer>;
 }
 
 const rootReducer = combineReducers({
     auth: authReducer,
     item: itemReducer,
-    routing: routingReducer,
     order: orderReducer,
     output: outputReducer,
+    routing: routingReducer,
     account: accountReducer,
     location: locationReducer,
+    labelPerHour: labelPerHourReducer,
     prorationType: prorationTypeReducer,
 })
 

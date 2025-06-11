@@ -48,7 +48,12 @@ const items = [
     {
         title: 'Outputs',
         url: '/output/list',
-        iconName: 'shopping-basket'
+        iconName: 'shopping-basket',
+    },
+    {
+        title: 'Label Per Hours',
+        url: '/label-per-hour/list',
+        iconName: 'tags',
     }
 ]
 
