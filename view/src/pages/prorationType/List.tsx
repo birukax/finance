@@ -40,7 +40,9 @@ const List = () => {
                 <TableHeader className='text-gray-200 bg-gray-100'>
                     <TableRow className='text-base'>
                         <TableHead>Name</TableHead>
+                        <TableHead>Location</TableHead>
                         <TableHead>Active</TableHead>
+                        <TableHead>Actions</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -48,7 +50,9 @@ const List = () => {
                         prorationTypes?.data?.map((prorationType) => (
                             <TableRow key={prorationType.id}>
                                 <TableCell>{prorationType.name}</TableCell>
+                                <TableCell>{prorationType.location && prorationType.location?.code}</TableCell>
                                 <TableCell>{String(prorationType.active)}</TableCell>
+                                <TableCell className='items-center'><Button variant='link' size='sm' onClick={() => navigate(`/proration-type/${prorationType.id}/edit`)}>Edit</Button></TableCell>
                             </TableRow>
                         ))
                     }

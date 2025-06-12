@@ -1,15 +1,20 @@
 from rest_framework import serializers
 from .models import ProrationType, Account, NetChange
+from production.serializers import LocationSerializer
 
 
 class ProrationTypeSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)
+    location = LocationSerializer(read_only=True)
+    location_id = serializers.IntegerField(write_only=True, required=False)
 
     class Meta:
         model = ProrationType
         fields = [
             "id",
             "name",
+            "location",
+            "location_id",
             "active",
         ]
 

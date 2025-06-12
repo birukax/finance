@@ -1,12 +1,16 @@
 from django.db import models
 from django.db.models.functions import Lower
 from main.models import BaseCreatedUpdated
+from production.models import Location
 
 YESNO = ((True, "Yes"), (False, "No"))
 
 
 class ProrationType(BaseCreatedUpdated):
     name = models.CharField(max_length=50, unique=True)
+    location = models.ForeignKey(
+        Location, on_delete=models.RESTRICT, null=True, blank=True
+    )
     active = models.BooleanField(choices=YESNO, default=True)
 
     class Meta:
