@@ -23,7 +23,6 @@ const Edit = () => {
     const { prorationTypes } = useSelector((state: AppState) => state.prorationType)
     const [formData, setFormData] = useState({
         active: false,
-        proration_type_id: '',
     })
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
@@ -40,9 +39,8 @@ const Edit = () => {
     useEffect(() => {
         setFormData({
             active: location?.data?.active || false,
-            proration_type_id: location?.data?.proration_type?.id && String(location?.data?.proration_type?.id),
         })
-    }, [dispatch,location])
+    }, [dispatch, location])
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value })
@@ -69,21 +67,6 @@ const Edit = () => {
                     <div className='grid grid-cols-2 gap-2 items-center' >
                         <Label htmlFor='active'>Active</Label>
                         <Switch disabled={location.loading} name='active' onCheckedChange={(checked) => setFormData({ ...formData, active: checked as boolean })} checked={formData.active} id='active' />
-                    </div>
-                    <div className='grid grid-cols-2 gap-2 items-center'>
-                        <Label htmlFor='proration_type_id' >Proration type</Label>
-                        <Select disabled={location.loading} name='proration_type_id' onValueChange={(value) => setFormData({ ...formData, proration_type_id: value })} value={formData.proration_type_id}>
-                            <SelectTrigger>
-                                <SelectValue placeholder='Select Proration Type' />
-                            </SelectTrigger>
-                            <SelectContent>
-                                {prorationTypes?.data &&
-                                    prorationTypes.data.map((prorationType) => (
-                                        <SelectItem key={prorationType.id} value={String(prorationType.id)}>{prorationType.name}</SelectItem>
-                                    ))
-                                }
-                            </SelectContent>
-                        </Select>
                     </div>
                     <div className="flex gap-4">
 

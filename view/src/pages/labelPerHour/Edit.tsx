@@ -30,16 +30,19 @@ const Edit = () => {
         setFormData({
             quantity: labelPerHour?.data?.quantity || 0
         })
-    }, [dispatch, labelPerHour])
+    }, [labelPerHour.data])
     const handleChange = (e) => {
         const { name, value } = e.target;
+        if (name == 'quantity' && value < 0) {
+            return
+        }
         setFormData({ ...formData, [name]: value })
     }
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             await dispatch(updateLabelPerHour({ id, formData })).unwrap();
-            navigate('/labelPerHour/list')
+            navigate('/label-per-hour/list')
         } catch (error) {
             toast.error(error);
         }
@@ -57,12 +60,12 @@ const Edit = () => {
 
                     <div className='grid grid-cols-2 gap-2 items-center' >
                         <Label htmlFor='quantity'>Quantity</Label>
-                        <Input disabled={labelPerHour.loading} name='quantity' onChange={handleChange} id='quantity' />
+                        <Input min={0} type='number' disabled={labelPerHour.loading} name='quantity' value={formData.quantity} onChange={handleChange} id='quantity' />
                     </div>
 
                     <div className="flex gap-4">
                         <Button size='sm' type='submit' className='mt-2'>Save</Button>
-                        <Button size='sm' variant='outline' className='mt-2' onClick={() => navigate('/labelPerHour/list')}>Cancel</Button>
+                        <Button size='sm' variant='outline' className='mt-2' onClick={() => navigate('/label-per-hour/list')}>Cancel</Button>
                     </div>
 
 

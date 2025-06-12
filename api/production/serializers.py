@@ -11,6 +11,7 @@ class ItemSerializer(serializers.ModelSerializer):
             "id",
             "no",
             "name",
+            "unit_of_measure",
         ]
 
 
@@ -23,6 +24,7 @@ class LocationSerializer(serializers.ModelSerializer):
             "id",
             "code",
             "name",
+            "active",
         ]
 
 

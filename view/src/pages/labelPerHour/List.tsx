@@ -34,7 +34,7 @@ const List = () => {
 
     return (
         <div className='w-auto h-full '>
-            <h2 className='text-lg' >LabelPerHour List</h2>
+            <h2 className='text-lg' >Label Per Hour List</h2>
             <div className='w-fit'>
                 <Button size='sm' asChild className='flex items-center gap-1' >
                     <Link to='/label-per-hour/create'>
@@ -52,6 +52,8 @@ const List = () => {
                         <TableHead>Location</TableHead>
                         <TableHead>Item</TableHead>
                         <TableHead>Quantity</TableHead>
+                        <TableHead>UoM</TableHead>
+                        <TableHead>Actions</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -59,14 +61,16 @@ const List = () => {
                         labelPerHours?.data?.map((labelPerHour) => (
                             <TableRow key={labelPerHour.id}>
                                 <TableCell>{labelPerHour.location ? labelPerHour.location.code : ''}</TableCell>
-                                <TableCell>{labelPerHour.order?.item ? labelPerHour.order.item.name : ''}</TableCell>
-                                <TableCell>{labelPerHour.quantity}</TableCell>
+                                <TableCell>{labelPerHour.item ? labelPerHour.item.name : ''}</TableCell>
+                                <TableCell className={labelPerHour.quantity === 0 && "text-red-500"}>{labelPerHour.quantity}</TableCell>
+                                <TableCell>{labelPerHour.item ? labelPerHour.item.unit_of_measure : ''}</TableCell>
+                                <TableCell className='items-center'><Button variant='link' size='sm' onClick={() => navigate(`/label-per-hour/${labelPerHour.id}/edit`)}>Edit</Button></TableCell>
                             </TableRow>
                         ))
                     }
                 </TableBody>
             </Table>
-        </div>
+        </div >
     )
 }
 

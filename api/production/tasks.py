@@ -14,10 +14,26 @@ def fetch_items():
             print("Fetch Item OK")
             data = response.json()
             for item in data["value"]:
-                item, updated = Item.objects.filter(no=item["No"]).update_or_create(
-                    no=item["No"], name=item["Description"]
-                )
-                # print(item.name, item.no)
+                if item["No"] != "" or item["No"] != None:
+                    item, created = Item.objects.update_or_create(
+                        name=item["Description"],
+                        unit_of_measure=item["Base_Unit_of_Measure"],
+                        defaults={"no": item["No"]},
+                    )
+                    locations = Location.objects.filter(active=True)
+                    if locations.exists():
+                        for l in locations:
+                            label_per_hour, created = (
+                                LabelPerHour.objects.get_or_create(
+                                    item=item,
+                                    location=l,
+                                    defaults={
+                                        "item": item,
+                                        "location": l,
+                                    },
+                                )
+                            )
+                    # print(item.name, item.no)
         else:
             print(response.text)
     except Exception as e:

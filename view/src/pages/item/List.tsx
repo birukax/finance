@@ -42,6 +42,7 @@ const List = () => {
                     <TableRow className='text-base'>
                         <TableHead >No.</TableHead>
                         <TableHead>Name</TableHead>
+                        <TableHead>UoM</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -50,6 +51,7 @@ const List = () => {
                             <TableRow key={item.id}>
                                 <TableCell>{item.no}</TableCell>
                                 <TableCell>{item.name}</TableCell>
+                                <TableCell>{item.unit_of_measure}</TableCell>
                             </TableRow>
                         ))
                     }

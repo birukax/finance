@@ -5,6 +5,7 @@ from main.models import BaseCreatedUpdated
 class Item(BaseCreatedUpdated):
     no = models.CharField(max_length=30)
     name = models.CharField(max_length=50)
+    unit_of_measure = models.CharField(max_length=30, null=True, blank=True)
 
     class Meta:
         ordering = ["-no"]
@@ -12,18 +13,20 @@ class Item(BaseCreatedUpdated):
     def __str__(self):
         if self.name:
             return f"{self.no} - {self.name}"
-        return self.no
+        if self.no:
+            return f"{self.no}"
 
 
 class Location(BaseCreatedUpdated):
     code = models.CharField(max_length=30)
     name = models.CharField(max_length=50)
+    active = models.BooleanField(default=False)
 
     class Meta:
         ordering = ["code"]
 
     def __str__(self):
-        return self.code
+        return f"{self.code}"
 
 
 class Order(BaseCreatedUpdated):
@@ -37,7 +40,7 @@ class Order(BaseCreatedUpdated):
     def __str__(self):
         if self.item:
             return f"{self.no} - {self.item.name}"
-        return self.no
+        return f"{self.no}"
 
 
 class Routing(BaseCreatedUpdated):
@@ -49,10 +52,10 @@ class Routing(BaseCreatedUpdated):
     work_center_group_code = models.CharField(max_length=75)
 
     class Meta:
-        ordering = ['-order__no',"operation_no"]
+        ordering = ["-order__no", "operation_no"]
 
     def __str__(self):
-        return self.operation_no
+        return f"{self.operation_no}"
 
 
 class Output(BaseCreatedUpdated):

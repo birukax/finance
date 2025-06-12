@@ -42,6 +42,8 @@ const List = () => {
                     <TableRow className='text-base'>
                         <TableHead >Code</TableHead>
                         <TableHead>Name</TableHead>
+                        <TableHead>Active</TableHead>
+                        <TableHead>Actions</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -50,7 +52,10 @@ const List = () => {
                             <TableRow key={location.id}>
                                 <TableCell>{location.code}</TableCell>
                                 <TableCell>{location.name}</TableCell>
-                                </TableRow>
+                                <TableCell>{String(location.active)}</TableCell>
+                                <TableCell className='items-center'><Button variant='link' size='sm' onClick={() => navigate(`/location/${location.id}/edit`)}>Edit</Button></TableCell>
+
+                            </TableRow>
                         ))
                     }
                 </TableBody>
