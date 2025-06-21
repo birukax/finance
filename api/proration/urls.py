@@ -10,6 +10,36 @@ router.register(
     basename="proration-type",
 )
 
+router.register(
+    r"prorations",
+    views.ProrationViewSet,
+    basename="proration",
+)
+
+router.register(
+    r"output-summaries",
+    views.OutputSummaryViewSet,
+    basename="output-summary",
+)
+
+router.register(
+    r"proration-type-summaries",
+    views.ProrationTypeSummaryViewSet,
+    basename="proration-type-summary",
+)
+
+router.register(
+    r"proration-summaries",
+    views.ProrationSummaryViewSet,
+    basename="proration-summary",
+)
+
+router.register(
+    r"proration-summary-amounts",
+    views.ProrationSummaryAmountViewSet,
+    basename="proration-summary-amount",
+)
+
 urlpatterns = [
     path("", include(router.urls)),
 ]

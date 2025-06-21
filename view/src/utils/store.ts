@@ -8,8 +8,9 @@ import outputReducer from '../pages/output/slices';
 import routingReducer from '../pages/routing/slices';
 import accountReducer from '../pages/account/slices';
 import locationReducer from '../pages/location/slices';
-import prorationTypeReducer from '../pages/prorationType/slices';
+import prorationReducer from '../pages/proration/slices';
 import labelPerHourReducer from '../pages/labelPerHour/slices';
+import prorationTypeReducer from '../pages/prorationType/slices';
 
 interface RootState {
     auth: ReturnType<typeof authReducer>;
@@ -19,6 +20,7 @@ interface RootState {
     routing: ReturnType<typeof routingReducer>;
     account: ReturnType<typeof accountReducer>;
     location: ReturnType<typeof locationReducer>;
+    proration: ReturnType<typeof prorationReducer>;
     labelPerHour: ReturnType<typeof labelPerHourReducer>;
     prorationType: ReturnType<typeof prorationTypeReducer>;
 }
@@ -31,6 +33,7 @@ const rootReducer = combineReducers({
     routing: routingReducer,
     account: accountReducer,
     location: locationReducer,
+    proration: prorationReducer,
     labelPerHour: labelPerHourReducer,
     prorationType: prorationTypeReducer,
 })

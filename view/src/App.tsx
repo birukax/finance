@@ -7,6 +7,7 @@ import OutputRoutes from './pages//output/Routes';
 import RoutingRoutes from './pages/routing/Routes';
 import AccountRoutes from './pages/account/Routes';
 import LocationRoutes from './pages/location/Routes';
+import ProrationRoutes from './pages/proration/Routes';
 import LabelPerHourRoutes from './pages/labelPerHour/Routes';
 import ProrationTypeRoutes from './pages/prorationType/Routes';
 import './App.css'
@@ -23,6 +24,7 @@ const App: React.FC = () => {
       {RoutingRoutes}
       {AccountRoutes}
       {LocationRoutes}
+      {ProrationRoutes}
       {LabelPerHourRoutes}
       {ProrationTypeRoutes}
     </Routes>

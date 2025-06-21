@@ -1,9 +1,23 @@
 from rest_framework import serializers, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from .models import ProrationType
-from production.models import Location
-from gl.serializers import ProrationTypeSerializer
+from .models import (
+    ProrationType,
+    Proration,
+    OutputSummary,
+    ProrationSummary,
+    ProrationSummaryAmount,
+    ProrationTypeSummary,
+)
+from production.models import Location, Order
+from .serializers import (
+    ProrationTypeSerializer,
+    ProrationSerializer,
+    OutputSummarySerializer,
+    ProrationTypeSummarySerializer,
+    ProrationSummaryAmountSerializer,
+    ProrationSummarySerializer,
+)
 
 
 class ProrationTypeViewSet(viewsets.ModelViewSet):
@@ -48,3 +62,43 @@ class ProrationTypeViewSet(viewsets.ModelViewSet):
         else:
             serializer.is_valid(raise_exception=True)
             serializer.save()
+
+
+class ProrationViewSet(viewsets.ModelViewSet):
+    serializer_class = ProrationSerializer
+    queryset = Proration.objects.all()
+
+    search_fields = ["reference"]
+    filterset_fields = ["start_date", "end_date"]
+
+
+class OutputSummaryViewSet(viewsets.ModelViewSet):
+    serializer_class = OutputSummarySerializer
+    queryset = OutputSummary.objects.all()
+
+    search_fields = []
+    filterset_fields = ["quantity", "labels_per_hour", "total_hours"]
+
+
+class ProrationTypeSummaryViewSet(viewsets.ModelViewSet):
+    serializer_class = ProrationTypeSummarySerializer
+    queryset = ProrationTypeSummary.objects.all()
+
+    search_fields = []
+    filterset_fields = ["amount"]
+
+
+class ProrationSummaryViewSet(viewsets.ModelViewSet):
+    serializer_class = ProrationSummarySerializer
+    queryset = ProrationSummary.objects.all()
+
+    search_fields = []
+    filterset_fields = ["amount"]
+
+
+class ProrationSummaryAmountViewSet(viewsets.ModelViewSet):
+    serializer_class = ProrationSummaryAmountSerializer
+    queryset = ProrationSummaryAmount.objects.all()
+
+    search_fields = []
+    filterset_fields = ["amount"]

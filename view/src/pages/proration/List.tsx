@@ -3,31 +3,31 @@ import { AppState, AppDispatch } from '../../utils/store';
 import { useNavigate, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
-import { fetchProrationTypes } from './slices';
+import { fetchProrations } from './slices';
 import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Button } from '@/components/ui/button'
 import { Plus } from 'lucide-react';
 
 const List = () => {
-    const prorationTypes = useSelector((state: AppState) => state.prorationType.prorationTypes)
+    const prorations = useSelector((state: AppState) => state.proration.prorations)
     const navigate = useNavigate()
     const dispatch = useDispatch<AppDispatch>();
 
     useEffect(() => {
-        dispatch(fetchProrationTypes());
+        dispatch(fetchProrations());
     }, [])
 
 
-    if (prorationTypes.error != null) {
-        toast.error(JSON.stringify(prorationTypes.error || 'Error'))
+    if (prorations.error != null) {
+        toast.error(JSON.stringify(prorations.error || 'Error'))
     }
 
     return (
         <div className='w-auto h-full '>
-            <h2 className='text-lg' >Proration Type List</h2>
+            <h2 className='text-lg' >Proration List</h2>
             <div className='w-fit'>
                 <Button size='sm' asChild className='flex items-center gap-1' >
-                    <Link to='/proration-type/create'>
+                    <Link to='/proration/create'>
                         <Plus />
                         <span>
                             New
@@ -36,23 +36,23 @@ const List = () => {
                 </Button>
             </div>
             <Table>
-                <TableCaption> A list of all Proration Types.</TableCaption>
+                <TableCaption> A list of all Prorations.</TableCaption>
                 <TableHeader className='text-gray-200 bg-gray-100'>
                     <TableRow className='text-base'>
-                        <TableHead>Name</TableHead>
-                        <TableHead>Location</TableHead>
-                        <TableHead>Active</TableHead>
+                        <TableHead>Reference</TableHead>
+                        <TableHead>Start Date</TableHead>
+                        <TableHead>End Date</TableHead>
                         <TableHead>Actions</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {prorationTypes?.data.length > 0 &&
-                        prorationTypes?.data?.map((prorationType) => (
-                            <TableRow key={prorationType.id}>
-                                <TableCell>{prorationType.name}</TableCell>
-                                <TableCell>{prorationType.location && prorationType.location?.code}</TableCell>
-                                <TableCell>{String(prorationType.active)}</TableCell>
-                                <TableCell className='items-center'><Button variant='link' size='sm' onClick={() => navigate(`/proration-type/${prorationType.id}/edit`)}>Edit</Button></TableCell>
+                    {prorations?.data.length > 0 &&
+                        prorations?.data?.map((proration) => (
+                            <TableRow key={proration.id}>
+                                <TableCell>{proration.reference}</TableCell>
+                                <TableCell>{proration.start_date}</TableCell>
+                                <TableCell>{proration.end_date}</TableCell>
+                                <TableCell className='items-center'><Button variant='link' size='sm' onClick={() => navigate(`/proration/${proration.id}/edit`)}>Edit</Button></TableCell>
                             </TableRow>
                         ))
                     }

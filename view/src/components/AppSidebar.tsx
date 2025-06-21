@@ -26,6 +26,11 @@ const items = [
         iconName: 'chart-bar-stacked',
     },
     {
+        title: 'Prorations',
+        url: '/proration/list',
+        iconName: 'chart-bar-stacked',
+    },
+    {
         title: 'Items',
         url: '/item/list',
         iconName: 'shapes',
