@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "account",
     "gl",
     "production",
+    "proration",
     "corsheaders",
     "django_filters",
 ]
@@ -89,8 +90,8 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "finance",
-        "HOST": config("DB_HOST") or 'localhost',
-        "USER": config("DB_USER") or 'postgres',
+        "HOST": config("DB_HOST") or "localhost",
+        "USER": config("DB_USER") or "postgres",
         "PASSWORD": config("DB_PASSWORD") or "password",
         "PORT": "5432",
     }

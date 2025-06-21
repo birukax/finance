@@ -42,7 +42,7 @@ const Edit = () => {
             active: prorationType?.data?.active || false,
             location_id: String(prorationType?.data?.location?.id) || null,
         })
-    }, [dispatch, prorationType.data])
+    }, [prorationType.data])
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value })
@@ -53,7 +53,8 @@ const Edit = () => {
             await dispatch(updateProrationType({ id, formData })).unwrap();
             navigate('/proration-type/list')
         } catch (error) {
-            toast.error(error);
+            // toast.error(error);
+            console.log(error)
         }
     }
 
@@ -91,7 +92,7 @@ const Edit = () => {
                     <div className="flex gap-4">
 
                         <Button size='sm' type='submit' className='mt-2'>Save</Button>
-                        <Button size='sm' variant='outline' className='mt-2' onClick={() => navigate('/proration-type/list')}>Cancel</Button>
+                        <Button size='sm' type='button' variant='outline' className='mt-2' onClick={() => navigate('/proration-type/list')}>Cancel</Button>
                     </div>
 
 

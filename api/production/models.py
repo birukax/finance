@@ -67,7 +67,7 @@ class Output(BaseCreatedUpdated):
     quantity = models.IntegerField(default=0)
 
     class Meta:
-        ordering = ["-entry_no"]
+        ordering = ["-posting_date", "-entry_no"]
 
     def __str__(self):
         return f"{self.order.no} - {self.quantity}"

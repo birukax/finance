@@ -86,10 +86,10 @@ class OrderViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=["POST"])
     def update_orders(self, request):
-        # try:
-        fetch_orders()
-        # except Exception as e:
-        #     raise serializers.ValidationError({"error": str(e)})
+        try:
+            fetch_orders()
+        except Exception as e:
+            raise serializers.ValidationError({"error": str(e)})
 
         serializer = self.serializer_class(self.queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)

@@ -48,7 +48,7 @@ const List = () => {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {accounts?.data != [] &&
+                    {accounts?.data?.length > 0 &&
                         accounts?.data?.map((account) => (
                             <TableRow key={account.id}>
                                 <TableCell>{account.no}</TableCell>

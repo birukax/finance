@@ -19,7 +19,7 @@ const initialState: ProrationTypeState = {
 
 export const fetchProrationTypes = createAsyncThunk('prorationType/fetchProrationTypes', async (params, { rejectWithValue }) => {
     try {
-        const response = await api.get('/gl/proration-types/', { params });
+        const response = await api.get('/proration/proration-types/', { params });
         return response.data;
     } catch (error) {
         return rejectWithValue(error?.response?.data || 'Failed to fetch Proration Types.');
@@ -28,7 +28,7 @@ export const fetchProrationTypes = createAsyncThunk('prorationType/fetchProratio
 
 export const fetchProrationType = createAsyncThunk('prorationType/fetchProrationType', async (id, { rejectWithValue }) => {
     try {
-        const response = await api.get(`/gl/proration-types/${id}/`);
+        const response = await api.get(`/proration/proration-types/${id}/`);
         return response.data;
     } catch (error) {
         return rejectWithValue(error?.response?.data || 'Failed to fetch Proration Type.');
@@ -37,7 +37,7 @@ export const fetchProrationType = createAsyncThunk('prorationType/fetchProration
 
 export const createProrationType = createAsyncThunk('prorationType/createProrationType', async (formData, { rejectWithValue }) => {
     try {
-        const response = await api.post('/gl/proration-types/', formData);
+        const response = await api.post('/proration/proration-types/', formData);
         return response.data;
     } catch (error) {
         return rejectWithValue(error?.response?.data || 'Failed to create Proration Type.')
@@ -46,7 +46,7 @@ export const createProrationType = createAsyncThunk('prorationType/createProrati
 
 export const updateProrationType = createAsyncThunk('prorationType/updateProrationType', async ({ id, formData }, { rejectWithValue }) => {
     try {
-        const response = await api.patch(`/gl/proration-types/${id}/`, formData);
+        const response = await api.patch(`/proration/proration-types/${id}/`, formData);
         return response.data;
     } catch (error) {
         return rejectWithValue(error?.response?.data || 'Failed to update Proration Type.');
@@ -62,7 +62,6 @@ const prorationTypeSlice = createSlice({
             .addCase(fetchProrationTypes.pending, (state) => {
                 state.prorationTypes.loading = true;
                 state.prorationTypes.error = null;
-                state.prorationTypes.data = []
 
             })
             .addCase(fetchProrationTypes.fulfilled, (state, action: PayloadAction<[]>) => {
@@ -73,12 +72,10 @@ const prorationTypeSlice = createSlice({
             .addCase(fetchProrationTypes.rejected, (state, action) => {
                 state.prorationTypes.loading = false;
                 state.prorationTypes.error = action.payload || 'Unknown error';
-                state.prorationTypes.data = []
             })
             .addCase(fetchProrationType.pending, (state) => {
                 state.prorationType.loading = true;
                 state.prorationType.error = null;
-                state.prorationType.data = []
 
             })
             .addCase(fetchProrationType.fulfilled, (state, action: PayloadAction<[]>) => {
@@ -89,12 +86,10 @@ const prorationTypeSlice = createSlice({
             .addCase(fetchProrationType.rejected, (state, action) => {
                 state.prorationType.loading = false;
                 state.prorationType.error = action.payload || 'Unknown error';
-                state.prorationType.data = []
             })
             .addCase(createProrationType.pending, (state) => {
                 state.prorationType.loading = true;
                 state.prorationType.error = null;
-                state.prorationType.data = []
             })
             .addCase(createProrationType.fulfilled, (state, action: PayloadAction<[]>) => {
                 state.prorationType.loading = false;
@@ -104,12 +99,10 @@ const prorationTypeSlice = createSlice({
             .addCase(createProrationType.rejected, (state, action) => {
                 state.prorationType.loading = false;
                 state.prorationType.error = action.payload || 'Unknown error';
-                state.prorationType.data = []
             })
             .addCase(updateProrationType.pending, (state) => {
                 state.prorationType.loading = true;
                 state.prorationType.error = null;
-                state.prorationType.data = []
             })
             .addCase(updateProrationType.fulfilled, (state, action: PayloadAction<[]>) => {
                 state.prorationType.loading = false;
@@ -119,7 +112,6 @@ const prorationTypeSlice = createSlice({
             .addCase(updateProrationType.rejected, (state, action) => {
                 state.prorationType.loading = false;
                 state.prorationType.error = action.payload || 'Unknown error';
-                state.prorationType.data = []
             })
     }
 })

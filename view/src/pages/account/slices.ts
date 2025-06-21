@@ -60,7 +60,6 @@ const accountSlice = createSlice({
             .addCase(fetchAccounts.pending, (state) => {
                 state.accounts.loading = true;
                 state.accounts.error = null;
-                state.accounts.data = []
 
             })
             .addCase(fetchAccounts.fulfilled, (state, action: PayloadAction<[]>) => {
@@ -71,12 +70,10 @@ const accountSlice = createSlice({
             .addCase(fetchAccounts.rejected, (state, action) => {
                 state.accounts.loading = false;
                 state.accounts.error = action.payload || 'Unknown error';
-                state.accounts.data = []
             })
             .addCase(fetchAccount.pending, (state) => {
                 state.account.loading = true;
                 state.account.error = null;
-                state.account.data = []
 
             })
             .addCase(fetchAccount.fulfilled, (state, action: PayloadAction<[]>) => {
@@ -87,12 +84,10 @@ const accountSlice = createSlice({
             .addCase(fetchAccount.rejected, (state, action) => {
                 state.account.loading = false;
                 state.account.error = action.payload || 'Unknown error';
-                state.account.data = []
             })
             .addCase(updateAccount.pending, (state) => {
                 state.account.loading = true;
                 state.account.error = null;
-                state.account.data = []
 
             })
             .addCase(updateAccount.fulfilled, (state, action: PayloadAction<[]>) => {
@@ -103,12 +98,10 @@ const accountSlice = createSlice({
             .addCase(updateAccount.rejected, (state, action) => {
                 state.account.loading = false;
                 state.account.error = action.payload || 'Unknown error';
-                state.account.data = []
             })
             .addCase(updateAccounts.pending, (state) => {
                 state.accounts.loading = true;
                 state.accounts.error = null;
-                state.accounts.data = []
 
             })
             .addCase(updateAccounts.fulfilled, (state, action: PayloadAction<[]>) => {
@@ -119,7 +112,6 @@ const accountSlice = createSlice({
             .addCase(updateAccounts.rejected, (state, action) => {
                 state.accounts.loading = false;
                 state.accounts.error = action.payload || 'Unknown error';
-                state.accounts.data = []
             })
     }
 })

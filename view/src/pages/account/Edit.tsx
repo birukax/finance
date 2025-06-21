@@ -23,7 +23,7 @@ const Edit = () => {
     const { prorationTypes } = useSelector((state: AppState) => state.prorationType)
     const [formData, setFormData] = useState({
         active: false,
-        proration_type_id: '',
+        proration_type_id: null,
     })
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
@@ -37,16 +37,13 @@ const Edit = () => {
             }
         }
     }, [])
+
     useEffect(() => {
         setFormData({
             active: account?.data?.active || false,
-            proration_type_id: String(account?.data?.proration_type?.id),
+            proration_type_id: account?.data?.proration_type ? String(account?.data?.proration_type?.id) : null,
         })
     }, [dispatch, account.data])
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value })
-    }
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -73,13 +70,14 @@ const Edit = () => {
                         <Label htmlFor='active'>Active</Label>
                         <Switch disabled={account.loading} name='active' onCheckedChange={(checked) => setFormData({ ...formData, active: checked as boolean })} checked={formData.active} id='active' />
                     </div>
-                    <div className='grid grid-cols-2 gap-2 items-center'>
+                    <div className='grid grid-cols-2 gap-2 items-center text-center'>
                         <Label htmlFor='proration_type_id' >Proration type</Label>
-                        <Select disabled={account.loading} name='proration_type_id' onValueChange={(value) => setFormData({ ...formData, proration_type_id: value })} value={formData.proration_type_id} >
+                        <Select disabled={account.loading} name='proration_type_id' onValueChange={(value) => setFormData({ ...formData, proration_type_id: value })} value={formData.proration_type_id ? formData.proration_type_id : undefined} >
                             <SelectTrigger>
                                 <SelectValue placeholder='Select Proration Type' />
                             </SelectTrigger>
                             <SelectContent>
+                                <SelectItem value={null}>--------</SelectItem>
                                 {prorationTypes?.data &&
                                     prorationTypes.data.map((prorationType) => (
                                         <SelectItem key={prorationType.id} value={String(prorationType.id)}>{prorationType.name}</SelectItem>
@@ -89,12 +87,9 @@ const Edit = () => {
                         </Select>
                     </div>
                     <div className="flex gap-4">
-
                         <Button size='sm' type='submit' className='mt-2'>Save</Button>
-                        <Button size='sm' variant='outline' className='mt-2' onClick={() => navigate('/account/list')}>Cancel</Button>
+                        <Button size='sm' type='button' variant='outline' className='mt-2' onClick={() => navigate('/account/list')}>Cancel</Button>
                     </div>
-
-
                 </form>
             </div>
         </div >

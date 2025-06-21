@@ -1,28 +1,14 @@
 from rest_framework import serializers
-from .models import ProrationType, Account, NetChange
-from production.serializers import LocationSerializer
-
-
-class ProrationTypeSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField(read_only=True)
-    location = LocationSerializer(read_only=True)
-    location_id = serializers.IntegerField(write_only=True, required=False)
-
-    class Meta:
-        model = ProrationType
-        fields = [
-            "id",
-            "name",
-            "location",
-            "location_id",
-            "active",
-        ]
+from .models import Account, NetChange
+from proration.serializers import ProrationTypeSerializer
 
 
 class AccountSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)
     proration_type = ProrationTypeSerializer(read_only=True)
-    proration_type_id = serializers.IntegerField(write_only=True)
+    proration_type_id = serializers.IntegerField(
+        write_only=True, required=False, allow_null=True
+    )
 
     class Meta:
         model = Account

@@ -60,31 +60,31 @@ def fetch_locations():
 
 def fetch_orders():
     url = config("ORDERS")
-    # try:
-    response = requests.get(url, auth=autenticate_api())
-    if response.ok:
-        print("Fetch Order OK")
-        data = response.json()
-        for order in data["value"]:
-            item = Item.objects.filter(no=order["Source_No"])
-            location = Location.objects.filter(code=order["Location_Code"])
-            if item.exists() and location.exists():
+    try:
+        response = requests.get(url, auth=autenticate_api())
+        if response.ok:
+            print("Fetch Order OK")
+            data = response.json()
+            for order in data["value"]:
+                item = Item.objects.filter(no=order["Source_No"])
+                location = Location.objects.filter(code=order["Location_Code"])
+                if item.exists() and location.exists():
 
-                order, updated = Order.objects.update_or_create(
-                    no=order["No"],
-                    defaults={
-                        "item": item.first(),
-                        "location": location.first(),
-                    },
-                )
-                if not updated:
-                    print(f"{order['No']} - {updated}")
-            else:
-                print(order["Source_No"], order["No"])
-    else:
-        print(response.text)
-    # except Exception as e:
-    #     print(e)
+                    order, updated = Order.objects.update_or_create(
+                        no=order["No"],
+                        defaults={
+                            "item": item.first(),
+                            "location": location.first(),
+                        },
+                    )
+                    if not updated:
+                        print(f"{order['No']} - {updated}")
+                else:
+                    print(order["Source_No"], order["No"])
+        else:
+            print(response.text)
+    except Exception as e:
+        print(e)
 
 
 def fetch_routings():
