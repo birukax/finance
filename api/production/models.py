@@ -61,6 +61,7 @@ class Routing(BaseCreatedUpdated):
 class Output(BaseCreatedUpdated):
     entry_no = models.CharField(max_length=30)
     order = models.ForeignKey("production.Order", on_delete=models.RESTRICT)
+    posting_date = models.DateField(null=True, blank=True)
     location = models.ForeignKey("production.Location", on_delete=models.RESTRICT)
     uom = models.CharField(max_length=20)
     quantity = models.IntegerField(default=0)

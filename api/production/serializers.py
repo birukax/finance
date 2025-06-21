@@ -82,6 +82,7 @@ class OutputSerializer(serializers.ModelSerializer):
             "location",
             "location_id",
             "entry_no",
+            "posting_date",
             "uom",
             "quantity",
         ]

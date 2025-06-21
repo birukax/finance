@@ -14,26 +14,23 @@ def fetch_items():
             print("Fetch Item OK")
             data = response.json()
             for item in data["value"]:
-                if item["No"] != "" or item["No"] != None:
-                    item, created = Item.objects.update_or_create(
-                        name=item["Description"],
-                        unit_of_measure=item["Base_Unit_of_Measure"],
-                        defaults={"no": item["No"]},
-                    )
-                    locations = Location.objects.filter(active=True)
-                    if locations.exists():
-                        for l in locations:
-                            label_per_hour, created = (
-                                LabelPerHour.objects.get_or_create(
-                                    item=item,
-                                    location=l,
-                                    defaults={
-                                        "item": item,
-                                        "location": l,
-                                    },
-                                )
-                            )
-                    # print(item.name, item.no)
+                if item["No"] == "" or item["No"] == None:
+                    continue
+                item, updated = Item.objects.update_or_create(
+                    no=item["No"],
+                    defaults={
+                        "name": item["Description"],
+                        "unit_of_measure": item["Base_Unit_of_Measure"],
+                    },
+                )
+                locations = Location.objects.filter(active=True)
+                if locations.exists():
+                    for l in locations:
+                        label_per_hour, created = LabelPerHour.objects.get_or_create(
+                            item=item,
+                            location=l,
+                        )
+                # print(item.name, item.no)
         else:
             print(response.text)
     except Exception as e:
@@ -48,11 +45,11 @@ def fetch_locations():
             print("Fetch Location OK")
             data = response.json()
             for location in data["value"]:
-                location, updated = Location.objects.filter(
-                    code=location["Code"]
-                ).update_or_create(
-                    name=location["Name"],
+                location, updated = Location.objects.update_or_create(
                     code=location["Code"],
+                    defaults={
+                        "name": location["Name"],
+                    },
                 )
                 # print(location.name, location.code)
         else:
@@ -63,27 +60,31 @@ def fetch_locations():
 
 def fetch_orders():
     url = config("ORDERS")
-    try:
-        response = requests.get(url, auth=autenticate_api())
-        if response.ok:
-            print("Fetch Order OK")
-            data = response.json()
-            for order in data["value"]:
-                item = Item.objects.filter(no=order["Source_No"])
-                location = Location.objects.filter(code=order["Location_Code"])
-                if item.exists() and location.exists():
-                    item = item.first()
-                    location = location.first()
-                    order, updated = Order.objects.filter(
-                        no=order["No"]
-                    ).update_or_create(item=item, location=location, no=order["No"])
-                    # print(order.no, order.item, order.location)
-                else:
-                    print(order["Source_No"], order["No"])
-        else:
-            print(response.text)
-    except Exception as e:
-        print(e)
+    # try:
+    response = requests.get(url, auth=autenticate_api())
+    if response.ok:
+        print("Fetch Order OK")
+        data = response.json()
+        for order in data["value"]:
+            item = Item.objects.filter(no=order["Source_No"])
+            location = Location.objects.filter(code=order["Location_Code"])
+            if item.exists() and location.exists():
+
+                order, updated = Order.objects.update_or_create(
+                    no=order["No"],
+                    defaults={
+                        "item": item.first(),
+                        "location": location.first(),
+                    },
+                )
+                if not updated:
+                    print(f"{order['No']} - {updated}")
+            else:
+                print(order["Source_No"], order["No"])
+    else:
+        print(response.text)
+    # except Exception as e:
+    #     print(e)
 
 
 def fetch_routings():
@@ -97,15 +98,15 @@ def fetch_routings():
                 order = Order.objects.filter(no=routing["Prod_Order_No"])
                 if order.exists():
                     order = order.first()
-                    routing, updated = Routing.objects.filter(
-                        order=order
-                    ).update_or_create(
+                    routing, updated = Routing.objects.update_or_create(
                         order=order,
-                        operation_no=routing["Operation_No"],
-                        machine_center_no=routing["No"],
-                        machine_center_name=routing["Description"],
-                        work_center_code=routing["Work_Center_No"],
-                        work_center_group_code=routing["Work_Center_Group_Code"],
+                        defaults={
+                            "operation_no": routing["Operation_No"],
+                            "machine_center_no": routing["No"],
+                            "machine_center_name": routing["Description"],
+                            "work_center_code": routing["Work_Center_No"],
+                            "work_center_group_code": routing["Work_Center_Group_Code"],
+                        },
                     )
                 else:
                     print(routing["Prod_Order_No"])
@@ -128,14 +129,15 @@ def fetch_outputs():
                 if order.exists() and location.exists():
                     order = order.first()
                     location = location.first()
-                    output, updated = Output.objects.filter(
-                        entry_no=output["Entry_No"]
-                    ).update_or_create(
-                        order=order,
+                    output, updated = Output.objects.update_or_create(
                         entry_no=output["Entry_No"],
-                        location=location,
-                        uom=output["Unit_of_Measure_Code"],
-                        quantity=output["Quantity"],
+                        defaults={
+                            "order": order,
+                            "location": location,
+                            "posting_date": output["Posting_Date"],
+                            "uom": output["Unit_of_Measure_Code"],
+                            "quantity": output["Quantity"],
+                        },
                     )
                 else:
                     print(output["Order_No"], output["Location_Code"])
